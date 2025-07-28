@@ -1,0 +1,210 @@
+[
+    {
+        "id": 1,
+        "categoryId": 1,
+        "title": "Hamburguesa Simple",
+        "description": "Medallón de carne, pan, ketchup y mostaza.",
+        "price": 1500,
+        "image": "https://i.postimg.cc/BjjK2PvT/h-simple.jpg"
+    },
+    {
+        "id": 2,
+        "categoryId": 1,
+        "title": "Hamburguesa Completa",
+        "description": "Carne, lechuga, tomate, queso, mayonesa y pan casero.",
+        "price": 2000,
+        "image": "https://i.postimg.cc/KRvLvHSs/h-completa.jpg"
+    },
+    {
+        "id": 3,
+        "categoryId": 2,
+        "title": "Pizza Muzzarella",
+        "description": "Clásica pizza con salsa de tomate, muzzarella y orégano.",
+        "price": 2200,
+        "image": "https://i.postimg.cc/SjmYDvsN/p-muzzarella.avif"
+    },
+    {
+        "id": 4,
+        "categoryId": 2,
+        "title": "Pizza Rúcula y Jamón Crudo",
+        "description": "Pizza con base de muzzarella, rúcula fresca y jamón crudo.",
+        "price": 2500,
+        "image": "https://i.postimg.cc/LhvY73Yk/p-crudo.jpg"
+    },
+    {
+        "id": 5,
+        "categoryId": 2,
+        "title": "Pizza Fugazzeta Rellena",
+        "description": "Rellena de muzzarella, jamón y cebolla caramelizada.",
+        "price": 2400,
+        "image": "https://i.postimg.cc/fSW3yJF0/p-rellena.webp"
+    },
+    {
+        "id": 6,
+        "categoryId": 3,
+        "title": "Milanesa Simple",
+        "description": "Pan, milanesa, tomate, lechuga y aderezo.",
+        "price": 2500,
+        "image": "https://i.postimg.cc/zLWHcmK3/m-simple.webp"
+    },
+    {
+        "id": 7,
+        "categoryId": 3,
+        "title": "Milanesa Completa",
+        "description": "Pan, milanesa, jamón, queso, lechuga, tomate y huevo.",
+        "price": 2700,
+        "image": "https://i.postimg.cc/ygyg7FfH/m-completo.webp"
+    },
+    {
+        "id": 8,
+        "categoryId": 3,
+        "title": "Milanesa Completa + Papas",
+        "description": "Versión completa con guarnición de papas fritas para compartir.",
+        "price": 3000,
+        "image": "https://i.postimg.cc/21gBGjqP/m-especial.jpg"
+    },
+    {
+        "id": 9,
+        "categoryId": 5,
+        "title": "Choripán Simple",
+        "description": "Pan francés, chorizo, criolla y chimichurri.",
+        "price": 1800,
+        "image": "https://i.postimg.cc/2bQvVpSg/chori.jpg"
+    },
+    {
+        "id": 10,
+        "categoryId": 5,
+        "title": "Choripán Completo",
+        "description": "Incluye papas fritas y aderezos especiales.",
+        "price": 2000,
+        "image": "https://i.postimg.cc/dD9rFKXy/chori-papas.jpg"
+    },
+    {
+        "id": 11,
+        "categoryId": 4,
+        "title": "Sandwich de Bondiola Simple",
+        "description": "Pan francés, bondiola, criolla y chimichurri.",
+        "price": 2000,
+        "image": "https://i.postimg.cc/MnHytr9j/bondiola-cebolla.jpg"
+    },
+    {
+        "id": 12,
+        "categoryId": 4,
+        "title": "Sandwich de Bondiola Completo",
+        "description": "Con papas fritas y aderezos especiales.",
+        "price": 2300,
+        "image": "https://i.postimg.cc/PP2WWkQj/bondiola-fritas.jpg"
+    },
+    {
+        "id": 13,
+        "categoryId": 6,
+        "title": "Papas Fritas con Cheddar",
+        "description": "Porción grande de papas con cheddar fundido.",
+        "price": 1200,
+        "image": "https://i.postimg.cc/R6BJrPLd/p-cheedar.jpg"
+    },
+    {
+        "id": 14,
+        "categoryId": 7,
+        "title": "Agua Mineral 500ml",
+        "description": "Agua mineral sin gas Villavicencio.",
+        "price": 800,
+        "image": "https://i.postimg.cc/t7GNyk4L/agua.png"
+    },
+    {
+        "id": 15,
+        "categoryId": 9,
+        "title": "Coca-Cola 354ml",
+        "description": "Gaseosa Coca-Cola clásica, botella retornable.",
+        "price": 1000,
+        "image": "https://i.postimg.cc/5QfzzPHy/coca.jpg"
+    },
+    {
+        "id": 16,
+        "categoryId": 9,
+        "title": "Fanta Naranja 354ml",
+        "description": "Gaseosa sabor naranja.",
+        "price": 950,
+        "image": "https://i.postimg.cc/rzTx7phT/fanta.webp"
+    },
+    {
+        "id": 17,
+        "categoryId": 9,
+        "title": "Sprite Lima-Limón 354ml",
+        "description": "Refrescante gaseosa lima-limón marca Sprite.",
+        "price": 950,
+        "image": "https://i.postimg.cc/jDnDDV8v/sprite.webp"
+    },
+    {
+        "id": 18,
+        "categoryId": 7,
+        "title": "Jugo Cepita Manzana",
+        "description": "Jugo sabor manzana de 500ml, marca Cepita.",
+        "price": 900,
+        "image": "https://i.postimg.cc/xXZLZyZp/c-manzana.png"
+    },
+    {
+        "id": 19,
+        "categoryId": 7,
+        "title": "Jugo Cepita Naranja",
+        "description": "Jugo de naranja exprimido, marca Cepita 500ml.",
+        "price": 950,
+        "image": "https://i.postimg.cc/WDJ0cqLN/cepita-n.webp"
+    },
+    {
+        "id": 20,
+        "categoryId": 7,
+        "title": "Jugo Cepita Multifruta",
+        "description": "Jugo multifruta marca Cepita 500ml.",
+        "price": 950,
+        "image": "https://i.postimg.cc/TLMgd2fr/cepita-multifruta.jpg"
+    },
+    {
+        "id": 21,
+        "categoryId": 10,
+        "title": "Cerveza Andes Rubia 500ml",
+        "description": "Cerveza rubia argentina clásica.",
+        "price": 1300,
+        "image": "https://i.postimg.cc/6y9V4QRc/andes-rubia.png"
+    },
+    {
+        "id": 22,
+        "categoryId": 10,
+        "title": "Cerveza Andes Roja",
+        "description": "Cerveza roja con sabor intenso.",
+        "price": 1400,
+        "image": "https://i.postimg.cc/7b1MLzCb/andes-red.jpg"
+    },
+    {
+        "id": 23,
+        "categoryId": 10,
+        "title": "Cerveza Andes IPA",
+        "description": "Cerveza artesanal tipo IPA, fuerte y aromática.",
+        "price": 1450,
+        "image": "https://i.postimg.cc/zHpqL3r4/andes-ipa.webp"
+    },
+    {
+        "id": 24,
+        "categoryId": 11,
+        "title": "Vino Alma Mora",
+        "description": "Vino tinto Malbec de Bodega Luigi Bosca.",
+        "price": 2200,
+        "image": "https://i.postimg.cc/RND3CCTN/v-alma.jpg"
+    },
+    {
+        "id": 25,
+        "categoryId": 11,
+        "title": "Vino Diablo Muerte",
+        "description": "Vina las perdices .",
+        "price": 2100,
+        "image": "https://i.postimg.cc/WDMt7Gck/v-diablo.webp"
+    },
+    {
+        "id": 26,
+        "categoryId": 11,
+        "title": "Vino Santa Julia",
+        "description": "Vino dulce natural, ideal para postres.",
+        "price": 1900,
+        "image": "https://i.postimg.cc/VSydM7pw/v-santa.png"
+    }
+]

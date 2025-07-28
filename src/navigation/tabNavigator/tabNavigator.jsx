@@ -1,0 +1,47 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ShopStackNavigator from '../shopNavigator/shopStackNavigator';
+import CartStackNavigator from '../cartStackNavigator/cartStackNavigator';
+import OrdersStackNavigator from '../OrdersStackNavigator/ordersStackNavigator';
+import Icons from 'react-native-vector-icons/Entypo';
+import { useWindowDimensions } from 'react-native';
+
+const Tab = createBottomTabNavigator();
+
+const TabNavigator = () => {
+    const {width, height} = useWindowDimensions();
+    console.log(width,height)
+
+    return (
+        <Tab.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Tab.Screen
+                name="Shop"
+                component={ShopStackNavigator}
+                options={{
+                    tabBarIcon: ({ focused }) => <Icons name='home' size={30} color={focused ? 'red' : 'blue'} />
+                }}
+            />
+
+            <Tab.Screen
+                name="Cart"
+                component={CartStackNavigator}
+                options={{
+                    tabBarIcon: ({ focused }) => <Icons name='shopping-cart' size={24} color={focused ? 'red' : 'blue'} />
+                }}
+            />
+            <Tab.Screen
+                name="Orders"
+                component={OrdersStackNavigator}
+                options={{
+                    tabBarIcon: ({ focused }) => <Icons name='ticket' size={24} color={focused ? 'red' : 'blue'} />
+                }}
+            />
+
+        </Tab.Navigator>
+    );
+}
+
+export default TabNavigator;

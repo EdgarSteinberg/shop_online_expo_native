@@ -1,0 +1,57 @@
+[
+    {
+        "id": 1,
+        "title": "Hamburguesas",
+        "image": "https://i.postimg.cc/KRvLvHSs/h-completa.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Pizzas",
+        "image": "https://i.postimg.cc/LhvY73Yk/p-crudo.jpg"
+    },
+    {
+        "id": 3,
+        "title": "Sándwiches de Milanesa",
+        "image": "https://i.postimg.cc/21gBGjqP/m-especial.jpg"
+    },
+    {
+        "id": 4,
+        "title": "Sándwiches de Bondiola",
+        "image": "https://i.postimg.cc/PP2WWkQj/bondiola-fritas.jpg"
+    },
+    {
+        "id": 5,
+        "title": "Choripanes",
+        "image": "https://i.postimg.cc/dD9rFKXy/chori-papas.jpg"
+    },
+    {
+        "id": 6,
+        "title": "Papas Fritas",
+        "image": "https://i.postimg.cc/R6BJrPLd/p-cheedar.jpg"
+    },
+    {
+        "id": 7,
+        "title": "Agua",
+        "image": "https://i.postimg.cc/t7GNyk4L/agua.png"
+    },
+    {
+        "id": 8,
+        "title": "Jugos",
+        "image": "https://i.postimg.cc/TLMgd2fr/cepita-multifruta.jpg"
+    },
+    {
+        "id": 9,
+        "title": "Gaseosas",
+        "image": "https://i.postimg.cc/5QfzzPHy/coca.jpg"
+    },
+    {
+        "id": 10,
+        "title": "Cervezas",
+        "image": "https://i.postimg.cc/6y9V4QRc/andes-rubia.png"
+    },
+    {
+        "id": 11,
+        "title": "Vinos",
+        "image": "https://i.postimg.cc/WDMt7Gck/v-diablo.webp"
+    }
+]
