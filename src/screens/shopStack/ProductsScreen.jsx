@@ -1,34 +1,38 @@
 import { FlatList, StyleSheet, Text, View, Image, Pressable } from 'react-native';
-import products from '../../data/products.json';
-import Card from '../../components/card/Card';
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Card from '../../components/card/Card';
+import { setProductSelected } from '../../features/shop/shopSlice';
 
-const ProductsScreen = ({ route,navigation }) => {
+const ProductsScreen = ({ navigation }) => {
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const { category } = route.params;
 
+    const products = useSelector(state => state.shopReducer.products);
+    const category = useSelector(state => state.shopReducer.categorySelected);
+    const productsFilterCategory = useSelector(state => state.shopReducer.productsFiltredByCategory);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const filter = products.filter(
-            product =>
-                product.categoryId === category
-
-        );
-        setFilteredProducts(filter);
+        setFilteredProducts(productsFilterCategory);
     }, [category]);
 
     const renderProducts = ({ item }) => {
         return (
-            <Pressable onPress={() => navigation.navigate('Producto', {product: item})}>
+            <Pressable onPress={
+                () => {
+                    dispatch(setProductSelected(item))
+                    navigation.navigate('Producto');
+                }}>
                 <Card>
                     <View style={styles.ProductContainer}>
-                        <Text style={styles.title}>{item.title}</Text>
                         <View style={styles.imageContainer}>
                             <Image
                                 source={{ uri: item.image }}
                                 style={styles.image}
                                 resizeMode="contain"
                             />
+                    
                         </View>
                     </View>
                 </Card>
