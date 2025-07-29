@@ -26,13 +26,14 @@ const ProductsScreen = ({ navigation }) => {
                 }}>
                 <Card>
                     <View style={styles.ProductContainer}>
+                        <Text>{item.title}</Text>
                         <View style={styles.imageContainer}>
                             <Image
                                 source={{ uri: item.image }}
                                 style={styles.image}
                                 resizeMode="contain"
                             />
-                    
+
                         </View>
                     </View>
                 </Card>

@@ -38,9 +38,14 @@ const cartSlice = createSlice({
 
             // Log de control (opcional)
             /* console.log(current(state.cart)); */
+        },
+        clearCart: (state,action)=> {
+            state.cart = [],
+            state.date = new Date().toLocaleString();
+            state.total = 0
         }
     }
 });
 
-export const { addItem, deleteProduct } = cartSlice.actions;
+export const { addItem, deleteProduct,clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
