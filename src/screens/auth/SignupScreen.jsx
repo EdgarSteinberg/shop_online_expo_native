@@ -1,18 +1,53 @@
 import { StyleSheet, Text, View, TextInput, Pressable, Dimensions } from 'react-native'
 import { colors } from '../../components/theme/colors';
 import { useEffect, useState } from 'react';
-
+import { useSignupMutation } from '../../services/auth/authApi';
 
 const textInputWidth = Dimensions.get('window').width * 0.7
 
 const SignupScreen = ({ navigation }) => {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState(false);
+    const [messageError, setMessageError] = useState('');
+
+    const [triggerSignup, result] = useSignupMutation();
+
+    const handleSubmit = () => {
+        if(email.trim() === '' && password.trim() === ''){
+            setError(true);
+            setMessageError('No puedes enviar datos vacios!');
+        }
+
+        if (password !== confirmPassword) {
+            setError(true);
+            setMessageError('Las contraseñas no coinciden!');
+
+            return;
+        }
+        triggerSignup({ email, password });
+    };
+
+    console.log(result)
+
+    useEffect(() => {
+        if (result.status === 'fulfilled') {
+            navigation.navigate('Login');
+        }
+    }, [result]); // 
+
+
+    useEffect(() => {
+        setError(false);
+    }, [email, password]);
 
     return (
         <View style={styles.gradient}>
+            {
+                error && <Text style={styles.errorText}>{messageError}</Text>
+            }
             <Text style={styles.title}>Mundo Geek</Text>
             <Text style={styles.subTitle}>Registrate</Text>
             <View style={styles.inputContainer}>
@@ -51,13 +86,13 @@ const SignupScreen = ({ navigation }) => {
                 </Pressable>
             </View>
 
-            <Pressable style={styles.btn} onPress={null}><Text style={styles.btnText}>Crear cuenta</Text></Pressable>
+            <Pressable style={styles.btn} onPress={handleSubmit}><Text style={styles.btnText}>Crear cuenta</Text></Pressable>
 
         </View>
     )
 }
 
-export default SignupScreen
+export default SignupScreen;
 
 const styles = StyleSheet.create({
     gradient: {
@@ -119,10 +154,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '700'
     },
-    error: {
-        padding:16,
-        backgroundColor:colors.red,
-        borderRadius:8,
+    errorText: {
+        padding: 16,
+        backgroundColor: colors.red,
+        borderRadius: 8,
         color: colors.white
-    }
+    },
+    
 })

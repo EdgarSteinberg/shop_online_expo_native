@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Dimensions, TextInput } from "react-native";
 import { colors } from "../../components/theme/colors";
 import { useEffect, useState } from "react";
-import { useLoginMutation } from "../../services/auth/authApi"; 
+import { useLoginMutation } from "../../services/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../features/user/userSlice";
 
@@ -10,22 +10,35 @@ const textInputWidth = Dimensions.get('window').width * 0.7;
 const LoginScreen = ({ navigation, route }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [triggerLogin,result] = useLoginMutation();
-    
+    const [error, setError] = useState(false);
+    const [messageError, setMessageError] = useState('');
+    const [triggerLogin, result] = useLoginMutation();
+
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
+        if (email.trim() === '' && password.trim() === '') {
+            setError(true);
+            setMessageError('No puedes enviar datos vacios!');
+        }
         triggerLogin({
-            email,password
+            email, password
         })
     }
-    
+
     useEffect(() => {
         result.status === 'fulfilled' && dispatch(setUser(result.data.email))
     }, [result]);
 
+    useEffect(() => {
+        setError(false)
+    }, [email, password]);
+
     return (
         <View style={styles.container}>
+            {
+                error && <Text style={styles.errorText}>{messageError}</Text>
+            }
             <Text style={styles.title}>Mundo Geek</Text>
             <Text style={styles.subTitle}>Inicia sesión</Text>
             <View style={styles.inputContainer}>
@@ -124,10 +137,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '700'
     },
-    error: {
+    errorText: {
         padding: 16,
         backgroundColor: colors.red,
         borderRadius: 8,
         color: colors.white
-    }
+    },
 })
