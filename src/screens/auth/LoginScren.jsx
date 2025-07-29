@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Dimensions, TextInput } from "react-native";
 import { colors } from "../../components/theme/colors";
 import { useEffect, useState } from "react";
-import { useLoginMutation } from "../../services/auth/authApi"; 
+import { useLoginMutation } from "../../services/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../features/user/userSlice";
 
@@ -10,22 +10,35 @@ const textInputWidth = Dimensions.get('window').width * 0.7;
 const LoginScreen = ({ navigation, route }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [triggerLogin,result] = useLoginMutation();
-    
+    const [error, setError] = useState(false)
+    const [triggerLogin, result] = useLoginMutation();
+
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
         triggerLogin({
-            email,password
+            email, password
         })
     }
-    
+
     useEffect(() => {
-        result.status === 'fulfilled' && dispatch(setUser(result.data.email))
+        if (result.status === 'fulfilled') {
+            dispatch(setUser(result.data.email));
+            setError(false);
+        } else if (result.status === 'rejected') {
+            setError(true);
+        }
     }, [result]);
+
+    useEffect(() => {
+        setError(false);
+    }, [email, password]);
 
     return (
         <View style={styles.container}>
+            {
+                error && <Text>Crendeciales invalidas</Text>
+            }
             <Text style={styles.title}>Mundo Geek</Text>
             <Text style={styles.subTitle}>Inicia sesión</Text>
             <View style={styles.inputContainer}>
