@@ -1,21 +1,26 @@
-import { FlatList, StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Image, Pressable, ActivityIndicator } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '../../components/card/Card';
 import { setProductSelected } from '../../features/shop/shopSlice';
+import { useGetProductsByCategoryQuery } from '../../services/shop/shopApi';
 
 const ProductsScreen = ({ navigation }) => {
     const [filteredProducts, setFilteredProducts] = useState([]);
 
     const products = useSelector(state => state.shopReducer.products);
     const category = useSelector(state => state.shopReducer.categorySelected);
-    const productsFilterCategory = useSelector(state => state.shopReducer.productsFiltredByCategory);
-
+    //const productsFilterCategory = useSelector(state => state.shopReducer.productsFiltredByCategory);
+    console.log(category)
+    const { data: productsFilterCategory, isLoading, error } = useGetProductsByCategoryQuery(category);
+    console.log(productsFilterCategory)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setFilteredProducts(productsFilterCategory);
-    }, [category]);
+        if (productsFilterCategory && category) {
+            setFilteredProducts(productsFilterCategory);
+        }
+    }, [productsFilterCategory, category]);
 
     const renderProducts = ({ item }) => {
         return (
@@ -41,7 +46,14 @@ const ProductsScreen = ({ navigation }) => {
 
         );
     };
-
+    if (isLoading) {
+        return (
+            <View style={styles.center}>
+                <ActivityIndicator size="large" color="#0000ff" />
+                <Text>Cargando productos...</Text>
+            </View>
+        );
+    }
     return (
         <View>
             <FlatList

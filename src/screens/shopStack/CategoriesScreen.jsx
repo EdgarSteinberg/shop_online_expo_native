@@ -1,23 +1,21 @@
-import { StyleSheet, Text, View, FlatList, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, Pressable, ActivityIndicator } from 'react-native';
 import Card from '../../components/card/Card';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategorieSelected , filterProducts} from '../../features/shop/shopSlice';
+import { setCategorieSelected, filterProducts } from '../../features/shop/shopSlice';
+import { useGetCategoriesQuery } from '../../services/shop/shopApi';
 
 const CategoriesScreen = ({ navigation }) => {
-    const categories = useSelector(state => state.shopReducer.categories);
-
+    const { data: categories, isLoading, error } = useGetCategoriesQuery();
     const dispatch = useDispatch();
 
     const renderCategoryItem = ({ item }) => (
         <Pressable
-            onPress={
-                () => {
-                    dispatch(setCategorieSelected(item.id));
-                    dispatch(filterProducts());
-                    navigation.navigate('Productos');
-                }
-                }>
-
+            onPress={() => {
+                dispatch(setCategorieSelected(item.id));
+                dispatch(filterProducts());
+                navigation.navigate('Productos');
+            }}
+        >
             <Card>
                 <View style={styles.categoryContainer}>
                     <Text style={styles.title}>{item.title}</Text>
@@ -33,14 +31,31 @@ const CategoriesScreen = ({ navigation }) => {
         </Pressable>
     );
 
+    if (isLoading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#0000ff" />
+                <Text>Cargando categorías...</Text>
+            </View>
+        );
+    }
+
+    if (error) {
+        return (
+            <View style={styles.loadingContainer}>
+                <Text>Error al cargar las categorías.</Text>
+            </View>
+        );
+    }
+
     return (
         <FlatList
             data={categories}
             renderItem={renderCategoryItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
         />
-    )
-}
+    );
+};
 
 export default CategoriesScreen;
 
@@ -67,5 +82,10 @@ const styles = StyleSheet.create({
         height: '100%',
         objectFit: 'cover',
         borderRadius: 50,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 });
