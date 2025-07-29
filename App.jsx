@@ -3,8 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { NavigationContainer } from '@react-navigation/native';
-import TabNavigator from './src/navigation/tabNavigator/tabNavigator';
+import MainNavigator from './src/navigation/mainNavigator/mainNavigator';
 import { Provider } from 'react-redux';
 import store from './src/store';
 
@@ -31,12 +30,10 @@ export default function App() {
 
 
   return (
-    
+
     <Provider store={store}>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <TabNavigator />
-      </NavigationContainer>
+      <MainNavigator />
     </Provider>
 
   );
