@@ -10,12 +10,19 @@ const textInputWidth = Dimensions.get('window').width * 0.7;
 const LoginScreen = ({ navigation, route }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false)
+    const [error, setError] = useState(false);
+    const [messageError, setMessageError] = useState('');
+
     const [triggerLogin, result] = useLoginMutation();
 
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
+        if (email.trim() === '' && password.trim() === '') {
+            setError(true);
+            setMessageError('No puedes enviar datos vacios!');
+               return; F
+        }
         triggerLogin({
             email, password
         })
@@ -31,13 +38,16 @@ const LoginScreen = ({ navigation, route }) => {
     }, [result]);
 
     useEffect(() => {
-        setError(false);
+        setError(false)
+
     }, [email, password]);
 
     return (
         <View style={styles.container}>
             {
-                error && <Text>Crendeciales invalidas</Text>
+
+                error && <Text style={styles.errorText}>{messageError}</Text>
+
             }
             <Text style={styles.title}>Mundo Geek</Text>
             <Text style={styles.subTitle}>Inicia sesión</Text>
@@ -137,10 +147,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '700'
     },
-    error: {
+    errorText: {
         padding: 16,
         backgroundColor: colors.red,
         borderRadius: 8,
         color: colors.white
-    }
+    },
 })
