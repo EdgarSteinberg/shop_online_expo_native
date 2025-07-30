@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation, route }) => {
         if (email.trim() === '' && password.trim() === '') {
             setError(true);
             setMessageError('No puedes enviar datos vacios!');
-               return; F
+            return;
         }
         triggerLogin({
             email, password
@@ -30,10 +30,12 @@ const LoginScreen = ({ navigation, route }) => {
 
     useEffect(() => {
         if (result.status === 'fulfilled') {
-            dispatch(setUser(result.data.email));
+            dispatch(setUser({ email: result.data.email, localId: result.data.localId }));
             setError(false);
         } else if (result.status === 'rejected') {
             setError(true);
+            setMessageError('Credenciales invalidas!');
+            return;
         }
     }, [result]);
 
