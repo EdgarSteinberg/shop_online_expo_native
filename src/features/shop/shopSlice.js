@@ -22,10 +22,17 @@ const shopSlice = createSlice({
         },
         setProductSelected: (state, action) => {
             state.productSelected = action.payload
+        },
+        searchProductsByName: (state, action) => {
+            const query = action.payload.toLowerCase();
+            state.productsFiltredByCategory = products.filter(product =>
+                product.title.toLowerCase().includes(query)
+            );
         }
+
     }
 });
 
-export const { setCategorieSelected, filterProducts, setProductSelected } = shopSlice.actions;
+export const { setCategorieSelected, filterProducts, setProductSelected, searchProductsByName } = shopSlice.actions;
 
 export default shopSlice.reducer;

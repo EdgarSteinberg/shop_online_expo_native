@@ -5,11 +5,13 @@ import { addItem } from '../../features/cart/cartSlice';
 import Counter from '../../components/counter/counter';
 import { useState } from 'react';
 
+
 const ProductDetailScreen = () => {
   const product = useSelector(state => state.shopReducer.productSelected);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(1);
+
   console.log('quantity', quantity)
   if (!product) {
     return <Text>No hay producto seleccionado</Text>;
@@ -20,6 +22,7 @@ const ProductDetailScreen = () => {
       <Image
         source={{ uri: product.image }}
         alt={product.title}
+        style={styles.img}
         width='100%'
         height={width * .7}
         resizeMode='contain'
@@ -46,6 +49,9 @@ const ProductDetailScreen = () => {
 export default ProductDetailScreen;
 
 const styles = StyleSheet.create({
+  img: {
+    borderRadius: 9
+  },
   productContainer: {
     paddingHorizontal: 16,
     marginVertical: 16
@@ -82,7 +88,7 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: '800',
     fontSize: 18,
- 
+
   },
   discount: {
     backgroundColor: colors.brightOrange,
@@ -97,14 +103,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     verticalAlign: 'center'
   },
-  noStockText: {
-    color: colors.red
-  },
   price: {
     fontSize: 24,
     fontWeight: '700',
     alignSelf: 'center',
-     
+
   },
   addToCartButton: {
     padding: 8,
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
   },
   textAddToCart: {
     color: colors.white,
-    fontSize: 24,
+    fontSize: 22,
     textAlign: 'center',
   }
 })

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '../theme/colors';
 
-const Card = ({ children }) => {
+const CardItem = ({ children }) => {
     return (
         <View style={styles.container}>
             {children}
@@ -9,20 +9,21 @@ const Card = ({ children }) => {
     )
 }
 
-export default Card;
+export default CardItem;
+
 
 const styles = StyleSheet.create({
 
     container: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         margin: '0 auto',
-        backgroundColor: colors.lightGray,
+        backgroundColor: colors.grisClaro,
         justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
-        paddingVertical: 24, 
+        padding: 20, 
         margin: 8,
-        width: 180,  
+        width: '100%',  
         shadowColor: colors.black,
         elevation: 6,
         borderRadius:12

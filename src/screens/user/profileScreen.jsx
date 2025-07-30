@@ -48,7 +48,7 @@ const ProfileScreen = () => {
                     <Camera />
                 </Pressable>
             </View>
-            <Text style={styles.profileData}>Email: {user}</Text>
+            <Text style={styles.correo}>Email: {user}</Text>
         </View>
     )
 }
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         width: 128,
         height: 128,
         borderRadius: 128,
-        backgroundColor: colors.purple,
+        backgroundColor: colors.red,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -73,9 +73,11 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontSize: 48,
     },
-    profileData: {
+    correo: {
         paddingVertical: 16,
-        fontSize: 16
+        fontSize: 20,
+        fontFamily:  'Poppins-bold',
+        fontWeight: 'bold'
     },
     cameraIcon: {
         position: 'absolute',
@@ -87,21 +89,5 @@ const styles = StyleSheet.create({
         height: 128,
         borderRadius: 128
     },
-    mapContainer: {
-        width: '100%',
-        height: 240,
-        overflow: "hidden",
-        elevation: 5,
-        marginBottom: 16
-    },
-    map: {
-        height: 240,
-    },
-    mapTitle: {
-        fontWeight: '700'
-    },
-    placeDescriptionContainer: {
-        flexDirection: 'row',
-        gap: 16
-    }
+   
 })

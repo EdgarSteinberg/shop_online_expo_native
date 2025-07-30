@@ -1,19 +1,23 @@
-import { FlatList, StyleSheet, Text, View, Image, Pressable, ActivityIndicator } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '../../components/card/Card';
 import { setProductSelected } from '../../features/shop/shopSlice';
 import { useGetProductsByCategoryQuery } from '../../services/shop/shopApi';
+import { useWindowDimensions } from 'react-native';
+import Loading from '../../components/loading/Loading';
+import ErrorMessage from '../../components/errorMessage/ErrorMessage';
 
 const ProductsScreen = ({ navigation }) => {
+    const windowWidth = useWindowDimensions().width;
+    const numColumns = windowWidth > 600 ? 2 : 1;
     const [filteredProducts, setFilteredProducts] = useState([]);
 
     const products = useSelector(state => state.shopReducer.products);
     const category = useSelector(state => state.shopReducer.categorySelected);
-    //const productsFilterCategory = useSelector(state => state.shopReducer.productsFiltredByCategory);
-    console.log(category)
+ 
     const { data: productsFilterCategory, isLoading, error } = useGetProductsByCategoryQuery(category);
-    console.log(productsFilterCategory)
+    
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -31,13 +35,13 @@ const ProductsScreen = ({ navigation }) => {
                 }}>
                 <Card>
                     <View style={styles.ProductContainer}>
-                        <Text>{item.title}</Text>
                         <View style={styles.imageContainer}>
                             <Image
                                 source={{ uri: item.image }}
                                 style={styles.image}
-                                resizeMode="contain"
+                                resizeMode="corven"
                             />
+                            <Text style={styles.title}>{item.title}</Text>
 
                         </View>
                     </View>
@@ -48,10 +52,13 @@ const ProductsScreen = ({ navigation }) => {
     };
     if (isLoading) {
         return (
-            <View style={styles.center}>
-                <ActivityIndicator size="large" color="#0000ff" />
-                <Text>Cargando productos...</Text>
-            </View>
+            <Loading/>
+        );
+    }
+
+    if (error) {
+        return (
+           <ErrorMessage/>
         );
     }
     return (
@@ -60,6 +67,8 @@ const ProductsScreen = ({ navigation }) => {
                 data={filteredProducts}
                 renderItem={renderProducts}
                 keyExtractor={item => item.id}
+                numColumns={2}
+                contentContainerStyle={styles.cardContainer}
             />
         </View>
     );
@@ -68,8 +77,14 @@ const ProductsScreen = ({ navigation }) => {
 export default ProductsScreen;
 
 const styles = StyleSheet.create({
+    cardContainer: {
+        alignItems: 'center',
+        padding: 16
+    },
     title: {
-        fontFamily: 'Poppins-Bold'
+        fontFamily: 'Poppins-Bold',
+        fontWeight: 'bold',
+        textAlign: 'center'
     },
     ProductContainer: {
         flexDirection: 'row',
@@ -91,4 +106,5 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderRadius: 50,
     },
+  
 });

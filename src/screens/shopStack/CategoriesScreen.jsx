@@ -3,8 +3,14 @@ import Card from '../../components/card/Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategorieSelected, filterProducts } from '../../features/shop/shopSlice';
 import { useGetCategoriesQuery } from '../../services/shop/shopApi';
+import { useWindowDimensions } from 'react-native';
+import Loading from '../../components/loading/Loading';
+import ErrorMessage from '../../components/errorMessage/ErrorMessage';
 
 const CategoriesScreen = ({ navigation }) => {
+    const windowWidth = useWindowDimensions().width;
+    const numColumns = windowWidth > 600 ? 2 : 1;
+    
     const { data: categories, isLoading, error } = useGetCategoriesQuery();
     const dispatch = useDispatch();
 
@@ -18,13 +24,13 @@ const CategoriesScreen = ({ navigation }) => {
         >
             <Card>
                 <View style={styles.categoryContainer}>
-                    <Text style={styles.title}>{item.title}</Text>
                     <View style={styles.imageContainer}>
                         <Image
                             source={{ uri: item.image }}
                             style={styles.image}
                             resizeMode="contain"
                         />
+                        <Text style={styles.title}>{item.title}</Text>
                     </View>
                 </View>
             </Card>
@@ -33,26 +39,24 @@ const CategoriesScreen = ({ navigation }) => {
 
     if (isLoading) {
         return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#0000ff" />
-                <Text>Cargando categorías...</Text>
-            </View>
+            <Loading/>
         );
     }
 
     if (error) {
         return (
-            <View style={styles.loadingContainer}>
-                <Text>Error al cargar las categorías.</Text>
-            </View>
+            <ErrorMessage/>
         );
     }
 
     return (
         <FlatList
+            key={numColumns}
             data={categories}
             renderItem={renderCategoryItem}
             keyExtractor={(item) => item.id.toString()}
+            numColumns={2}
+            contentContainerStyle={styles.cardContainer}
         />
     );
 };
@@ -60,14 +64,20 @@ const CategoriesScreen = ({ navigation }) => {
 export default CategoriesScreen;
 
 const styles = StyleSheet.create({
+    cardContainer: {
+        alignItems: 'center',
+        padding: 16
+    },
     title: {
-        fontFamily: 'Poppins-Bold'
+        fontFamily: 'Poppins-Bold',
+        textAlign: 'center'
     },
     categoryContainer: {
-        flexDirection: 'row',
-        gap: 20,
+        flexDirection: 'column',
+        gap: 10,
         alignItems: 'center',
         justifyContent: 'center',
+      
     },
     imageContainer: {
         width: 100,
@@ -83,9 +93,5 @@ const styles = StyleSheet.create({
         objectFit: 'cover',
         borderRadius: 50,
     },
-    loadingContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
+    
 });

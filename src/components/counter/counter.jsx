@@ -38,11 +38,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10
+        margin: 10,
+        backgroundColor: '#ddd',
+        borderRadius: 16,
+        width: '36%',           
+        alignSelf: 'center'    
     },
     button: {
         backgroundColor: '#ddd',
-        padding: 10,
+        padding: 12,
         borderRadius: 5,
         marginHorizontal: 10
     },

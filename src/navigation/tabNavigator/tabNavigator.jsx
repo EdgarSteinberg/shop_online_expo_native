@@ -5,6 +5,7 @@ import OrdersStackNavigator from '../OrdersStackNavigator/ordersStackNavigator';
 import ProfileStackNavigator from '../profileStackNavigator/profileStackNavigator';
 import Icons from 'react-native-vector-icons/Entypo';
 import { useWindowDimensions } from 'react-native';
+import { colors } from '../../components/theme/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ const TabNavigator = () => {
                 name="Shop"
                 component={ShopStackNavigator}
                 options={{
-                    tabBarIcon: ({ focused }) => <Icons name='home' size={30} color={focused ? 'red' : 'blue'} />
+                    tabBarIcon: ({ focused }) => <Icons name='home' size={30} color={focused ? colors.grisOscuro : colors.grisClaro} />
                 }}
             />
 
@@ -30,21 +31,21 @@ const TabNavigator = () => {
                 name="Cart"
                 component={CartStackNavigator}
                 options={{
-                    tabBarIcon: ({ focused }) => <Icons name='shopping-cart' size={24} color={focused ? 'red' : 'blue'} />
+                    tabBarIcon: ({ focused }) => <Icons name='shopping-cart' size={24} color={focused ? colors.grisOscuro : colors.grisClaro} />
                 }}
             />
             <Tab.Screen
                 name="Orders"
                 component={OrdersStackNavigator}
                 options={{
-                    tabBarIcon: ({ focused }) => <Icons name='ticket' size={24} color={focused ? 'red' : 'blue'} />
+                    tabBarIcon: ({ focused }) => <Icons name='ticket' size={24} color={focused ? colors.grisOscuro : colors.grisClaro} />
                 }}
             />
             <Tab.Screen
                 name="Profile"
                 component={ProfileStackNavigator}
                 options={{
-                    tabBarIcon: ({ focused }) => <Icons name='user' size={24} color={focused ? 'red' : 'blue'} />
+                    tabBarIcon: ({ focused }) => <Icons name='user' size={24} color={focused ? colors.grisOscuro : colors.grisClaro} />
                 }}
             />
 

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput, Pressable, Dimensions } from 'react-
 import { colors } from '../../components/theme/colors';
 import { useEffect, useState } from 'react';
 import { useSignupMutation } from '../../services/auth/authApi';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const textInputWidth = Dimensions.get('window').width * 0.7
 
@@ -16,7 +17,7 @@ const SignupScreen = ({ navigation }) => {
     const [triggerSignup, result] = useSignupMutation();
 
     const handleSubmit = () => {
-        if(email.trim() === '' && password.trim() === ''){
+        if (email.trim() === '' && password.trim() === '') {
             setError(true);
             setMessageError('No puedes enviar datos vacios!');
         }
@@ -44,121 +45,130 @@ const SignupScreen = ({ navigation }) => {
     }, [email, password]);
 
     return (
-        <View style={styles.gradient}>
-            {
-                error && <Text style={styles.errorText}>{messageError}</Text>
-            }
-            <Text style={styles.title}>Mundo Geek</Text>
-            <Text style={styles.subTitle}>Registrate</Text>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    onChangeText={(text) => setEmail(text)}
-                    placeholderTextColor={colors.white}
-                    placeholder="Email"
-                    style={styles.textInput}
-                />
-                <TextInput
-                    onChangeText={(text) => setPassword(text)}
-                    placeholderTextColor={colors.white}
-                    placeholder='Password'
-                    style={styles.textInput}
-                    secureTextEntry
-                />
-                <TextInput
-                    onChangeText={(text) => setConfirmPassword(text)}
-                    placeholderTextColor={colors.white}
-                    placeholder='Repetir password'
-                    style={styles.textInput}
-                    secureTextEntry
-                />
-            </View>
-            <View style={styles.footTextContainer}>
-                <Text style={styles.whiteText}>¿Ya tienes una cuenta?</Text>
-                <Pressable onPress={() => navigation.navigate('Login')}>
-                    <Text style={
-                        {
-                            ...styles.whiteText,
-                            ...styles.underLineText
-                        }
-                    }>
-                        Iniciar sesión
-                    </Text>
-                </Pressable>
-            </View>
+        <LinearGradient
+            colors={['#ffcccc', colors.red]} // rojo suave a fuerte
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={styles.container}
+        >
+            <View >
+                {
+                    error && <Text style={styles.errorText}>{messageError}</Text>
+                }
+                <Text style={styles.title}>BodegónApp!</Text>
+                <Text style={styles.subTitle}>Registrate</Text>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        onChangeText={(text) => setEmail(text)}
+                        placeholderTextColor={colors.black}
+                        placeholder="Email"
+                        style={styles.textInput}
+                    />
+                    <TextInput
+                        onChangeText={(text) => setPassword(text)}
+                        placeholderTextColor={colors.black}
+                        placeholder='Password'
+                        style={styles.textInput}
+                        secureTextEntry
+                    />
+                    <TextInput
+                        onChangeText={(text) => setConfirmPassword(text)}
+                        placeholderTextColor={colors.black}
+                        placeholder='Confirmar contraseña:'
+                        style={styles.textInput}
+                        secureTextEntry
+                    />
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.cuentaText}>¿Ya tienes una cuenta?</Text>
+                    <Pressable onPress={() => navigation.navigate('Login')}>
+                        <Text style={styles.crearText}>Iniciar sesión</Text>
+                    </Pressable>
+                </View>
 
-            <Pressable style={styles.btn} onPress={handleSubmit}><Text style={styles.btnText}>Crear cuenta</Text></Pressable>
+                <Pressable style={styles.btn} onPress={handleSubmit}><Text style={styles.btnText}>Crear cuenta</Text></Pressable>
 
-        </View>
+            </View>
+        </LinearGradient>
     )
 }
 
 export default SignupScreen;
 
 const styles = StyleSheet.create({
-    gradient: {
+    container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.purple
+        backgroundColor: colors.red
     },
     title: {
-        color: colors.neonGreen,
-        fontFamily: "PressStart2P",
-        fontSize: 24
+        color: colors.black,
+        fontFamily: 'Poppins-Bold',
+        fontSize: 30,
+        textAlign: 'center'
     },
     subTitle: {
-        fontFamily: "Montserrat",
-        fontSize: 18,
-        color: colors.yellow,
-        fontWeight: '700',
-        letterSpacing: 3
+        fontFamily: 'Poppins-Regular',
+        fontSize: 20,
+        color: colors.white,
+        fontWeight: 'bold',
+        textAlign: 'center'
     },
     inputContainer: {
         gap: 16,
         margin: 16,
-        marginTop: 48,
+        marginTop: 30,
         alignItems: 'center',
-
     },
     textInput: {
-        padding: 8,
+        padding: 10,
         paddingLeft: 16,
         borderRadius: 16,
-        backgroundColor: colors.darkGray,
+        backgroundColor: colors.white,
         width: textInputWidth,
-        color: colors.white,
+        color: colors.black,
+        fontWeight: 'bold'
     },
-    footTextContainer: {
+    textContainer: {
         flexDirection: 'row',
         gap: 8,
     },
-    whiteText: {
-        color: colors.white
+    cuentaText: {
+        color: colors.black,
+        fontWeight: 'bold',
+        fontSize: 18,
     },
-    underLineText: {
-        textDecorationLine: 'underline',
+    crearText: {
+        fontWeight: 'bold',
+        fontSize: 18
     },
     strongText: {
         fontWeight: '900',
         fontSize: 16
     },
     btn: {
-        padding: 16,
-        paddingHorizontal: 32,
+        padding: 12,
         backgroundColor: colors.black,
         borderRadius: 16,
-        marginTop: 32
+        marginTop: 24,
+        width: 180,
+        alignItems: 'center',
+        alignSelf: 'center',
     },
     btnText: {
         color: colors.white,
         fontSize: 16,
-        fontWeight: '700'
+        fontFamily: 'Poppins-Bold',
+        textAlign: 'center'
     },
     errorText: {
-        padding: 16,
-        backgroundColor: colors.red,
+        padding: 12,
+        backgroundColor: 'transparent',
         borderRadius: 8,
-        color: colors.white
+        color: colors.red,
+        textAlign: 'center',
+        fontSize: 22,
+        fontFamily: 'Poppins-Bold',
     },
-    
 })
