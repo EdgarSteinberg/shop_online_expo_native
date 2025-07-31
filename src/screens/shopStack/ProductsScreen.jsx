@@ -7,6 +7,8 @@ import { useGetProductsByCategoryQuery } from '../../services/shop/shopApi';
 import { useWindowDimensions } from 'react-native';
 import Loading from '../../components/loading/Loading';
 import ErrorMessage from '../../components/errorMessage/ErrorMessage';
+import { LinearGradient } from 'expo-linear-gradient';
+import { colors } from '../../components/theme/colors';
 
 const ProductsScreen = ({ navigation }) => {
     const windowWidth = useWindowDimensions().width;
@@ -15,9 +17,9 @@ const ProductsScreen = ({ navigation }) => {
 
     const products = useSelector(state => state.shopReducer.products);
     const category = useSelector(state => state.shopReducer.categorySelected);
- 
+
     const { data: productsFilterCategory, isLoading, error } = useGetProductsByCategoryQuery(category);
-    
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -52,17 +54,22 @@ const ProductsScreen = ({ navigation }) => {
     };
     if (isLoading) {
         return (
-            <Loading/>
+            <Loading />
         );
     }
 
     if (error) {
         return (
-           <ErrorMessage/>
+            <ErrorMessage />
         );
     }
     return (
-        <View>
+        <LinearGradient
+            colors={['#ffcccc', colors.red]} // rojo suave a fuerte
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={styles.container}
+        >
             <FlatList
                 data={filteredProducts}
                 renderItem={renderProducts}
@@ -70,13 +77,17 @@ const ProductsScreen = ({ navigation }) => {
                 numColumns={2}
                 contentContainerStyle={styles.cardContainer}
             />
-        </View>
+        </LinearGradient>
     );
 };
 
 export default ProductsScreen;
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'start'
+    },
     cardContainer: {
         alignItems: 'center',
         padding: 16
@@ -106,5 +117,5 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderRadius: 50,
     },
-  
+
 });

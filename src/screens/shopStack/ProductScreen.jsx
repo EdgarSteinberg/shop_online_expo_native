@@ -4,8 +4,8 @@ import { colors } from '../../components/theme/colors';
 import { addItem } from '../../features/cart/cartSlice';
 import Counter from '../../components/counter/counter';
 import { useState } from 'react';
-
-
+import { LinearGradient } from 'expo-linear-gradient';
+ 
 const ProductDetailScreen = ({ navigation }) => {
   const product = useSelector(state => state.shopReducer.productSelected);
   const { width } = useWindowDimensions();
@@ -18,41 +18,53 @@ const ProductDetailScreen = ({ navigation }) => {
   }
 
   return (
-    <ScrollView style={styles.productContainer}>
-      <Image
-        source={{ uri: product.image }}
-        alt={product.title}
-        style={styles.img}
-        width='100%'
-        height={width * .7}
-        resizeMode='contain'
-      />
-      <Text style={styles.textTitle}>{product.title}</Text>
-      <Text style={styles.longDescription}>{product.description}</Text>
-      <Text style={styles.textBrand}>{product.brand}</Text>
-      <Text style={styles.price}>Precio: ${product.price}</Text>
+    <LinearGradient
+      colors={['#ffcccc', colors.red]} // rojo suave a fuerte
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+      style={styles.container}
+    >
+      <ScrollView style={styles.productContainer}>
+        <Image
+          source={{ uri: product.image }}
+          alt={product.title}
+          style={styles.img}
+          width='100%'
+          height={width * .7}
+          resizeMode='contain'
+        />
+        <Text style={styles.textTitle}>{product.title}</Text>
+        <Text style={styles.longDescription}>{product.description}</Text>
+        <Text style={styles.textBrand}>{product.brand}</Text>
+        <Text style={styles.price}>Precio: ${product.price}</Text>
 
-      <View style={styles.tags}>
-        <Counter setQuantity={setQuantity} />
+        <View style={styles.tags}>
+          <Counter setQuantity={setQuantity} />
 
-        <Pressable
-          style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
-          onPress={
-            () => {
-              dispatch(addItem({ product: product, quantity }))
-              navigation.navigate('Cart')
-            }} >
-          <Text style={styles.textAddToCart}>Agregar al carrito</Text>
-        </Pressable>
-      </View>
+          <Pressable
+            style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
+            onPress={
+              () => {
+                dispatch(addItem({ product: product, quantity }))
+                navigation.navigate('Cart')
+              }} >
+            <Text style={styles.textAddToCart}>Agregar al carrito</Text>
+          </Pressable>
+        </View>
 
-    </ScrollView>
+      </ScrollView>
+    </LinearGradient>
   )
 }
 
 export default ProductDetailScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'start'
+
+  },
   img: {
     borderRadius: 9
   },

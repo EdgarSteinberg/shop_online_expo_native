@@ -8,6 +8,9 @@ import { useWindowDimensions } from 'react-native';
 import { colors } from '../../components/theme/colors';
 import { View, Text, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
+
+
+
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
@@ -15,6 +18,7 @@ const TabNavigator = () => {
     console.log(width, height)
 
     return (
+        
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,

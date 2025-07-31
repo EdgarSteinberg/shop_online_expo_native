@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { initSessionTable, getSession } from "../../db";
 import Loading from "../../components/loading/Loading";
 import ErrorMessage from "../../components/errorMessage/ErrorMessage";
-import { StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 import { colors } from "../../components/theme/colors";
 
 const MainNavigator = () => {
@@ -42,9 +42,10 @@ const MainNavigator = () => {
     if (error) return <ErrorMessage />;
 
     // Spinner session
-    if (loading) return <Loading/>
+    if (loading) return <Loading />
 
     return (
+        
         <NavigationContainer>
             {
                 userEmail ? <TabNavigator /> : <AuthStackNavigator />
@@ -54,17 +55,4 @@ const MainNavigator = () => {
 }
 
 export default MainNavigator;
-
-const styles = StyleSheet.create({
-    spinerContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignContent: 'center'
-    },  
-    titleTextSpiner: {
-        fontFamily: 'Poppins-Bold',
-        fontWeight: 'bold',
-        fontSize: 16,
-        color: colors.black
-    }
-})
+ 

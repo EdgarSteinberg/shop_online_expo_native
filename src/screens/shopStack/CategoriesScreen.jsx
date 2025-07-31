@@ -6,11 +6,13 @@ import { useGetCategoriesQuery } from '../../services/shop/shopApi';
 import { useWindowDimensions } from 'react-native';
 import Loading from '../../components/loading/Loading';
 import ErrorMessage from '../../components/errorMessage/ErrorMessage';
+import { LinearGradient } from 'expo-linear-gradient';
+import { colors } from '../../components/theme/colors';
 
 const CategoriesScreen = ({ navigation }) => {
     const windowWidth = useWindowDimensions().width;
     const numColumns = windowWidth > 600 ? 2 : 1;
-    
+
     const { data: categories, isLoading, error } = useGetCategoriesQuery();
     const dispatch = useDispatch();
 
@@ -39,17 +41,23 @@ const CategoriesScreen = ({ navigation }) => {
 
     if (isLoading) {
         return (
-            <Loading/>
+            <Loading />
         );
     }
 
     if (error) {
         return (
-            <ErrorMessage/>
+            <ErrorMessage />
         );
     }
 
     return (
+          <LinearGradient
+              colors={['#ffcccc', colors.red]} // rojo suave a fuerte
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              style={styles.container}
+            >
         <FlatList
             key={numColumns}
             data={categories}
@@ -58,12 +66,18 @@ const CategoriesScreen = ({ navigation }) => {
             numColumns={2}
             contentContainerStyle={styles.cardContainer}
         />
+        </LinearGradient>
     );
 };
 
 export default CategoriesScreen;
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'start'
+         
+    },
     cardContainer: {
         alignItems: 'center',
         padding: 16
@@ -77,7 +91,7 @@ const styles = StyleSheet.create({
         gap: 10,
         alignItems: 'center',
         justifyContent: 'center',
-      
+
     },
     imageContainer: {
         width: 100,
@@ -93,5 +107,5 @@ const styles = StyleSheet.create({
         objectFit: 'cover',
         borderRadius: 50,
     },
-    
+
 });

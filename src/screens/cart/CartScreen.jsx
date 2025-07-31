@@ -4,6 +4,7 @@ import { colors } from '../../components/theme/colors';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import { deleteProduct, clearCart } from '../../features/cart/cartSlice';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const CartScreen = ({ navigation }) => {
   const cart = useSelector(state => state.cartReducer.cart);
@@ -23,10 +24,12 @@ const CartScreen = ({ navigation }) => {
         />
         <Text style={styles.cantidad}>Cantidad: {item.quantity}</Text>
         <Text style={styles.price}>Precio unitario: ${item.price}</Text>
-        <Text style={styles.total}>Total: ${item.price * item.quantity}</Text>
-        <Pressable onPress={() => dispatch(deleteProduct(item.id))} >
-          <Icon name='trash-2' size={28} color={colors.red} />
-        </Pressable>
+        <View style={styles.totalContainer}>
+          <Text style={styles.total}>Total: ${item.price * item.quantity}</Text>
+          <Pressable onPress={() => dispatch(deleteProduct(item.id))} >
+            <Icon name='trash-2' size={28} color={colors.red} />
+          </Pressable>
+        </View>
       </CardItem>
 
     );
@@ -51,10 +54,15 @@ const CartScreen = ({ navigation }) => {
   );
 
 
- 
+
 
   return (
-    <>
+    <LinearGradient
+      colors={['#ffcccc', colors.red]} // rojo suave a fuerte
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+      style={styles.container}
+    >
       {
         cart.length > 0 ? (
           <FlatList
@@ -74,14 +82,18 @@ const CartScreen = ({ navigation }) => {
           </View>
         )
       }
-    </>
+    </LinearGradient>
+
   );
 }
 
 export default CartScreen
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    justifyContent: 'start'
+  },
   containerTitleClear: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -143,7 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   footerContainer: {
-    padding: 20,
+    padding: 4,
     alignItems: 'center',
   },
   checkoutButton: {
@@ -155,5 +167,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
-  }, 
+  },
 })

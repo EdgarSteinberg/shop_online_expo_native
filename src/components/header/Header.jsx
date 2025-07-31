@@ -62,7 +62,7 @@ const Header = () => {
 
   return (
     <LinearGradient
-      colors={['#ffcccc', colors.red]} // rojo suave a fuerte
+      colors={[ colors.red, '#ffcccc',]} // rojo suave a fuerte
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={styles.container}
