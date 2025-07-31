@@ -4,6 +4,7 @@ import cartReducer from '../features/cart/cartSlice';
 import { shopApi } from "../services/shop/shopApi";
 import { authApi } from "../services/auth/authApi";
 import { userApi } from "../services/user/userApi"
+import { ordersApi } from "../services/orders/orders";
 import userReducer from "../features/user/userSlice";
 
 import { setupListeners } from "@reduxjs/toolkit/query";
@@ -16,6 +17,7 @@ const store = configureStore({
         [shopApi.reducerPath]: shopApi.reducer,
         [authApi.reducerPath]: authApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
+        [ordersApi.reducerPath]: ordersApi.reducer,
 
     },
     middleware: (getDefaultMiddleware) =>
@@ -23,6 +25,8 @@ const store = configureStore({
             .concat(shopApi.middleware)
             .concat(authApi.middleware)
             .concat(userApi.middleware)
+            .concat(ordersApi.middleware)
+
 
 });
 

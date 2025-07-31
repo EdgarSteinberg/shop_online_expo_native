@@ -6,7 +6,7 @@ import Counter from '../../components/counter/counter';
 import { useState } from 'react';
 
 
-const ProductDetailScreen = () => {
+const ProductDetailScreen = ({ navigation }) => {
   const product = useSelector(state => state.shopReducer.productSelected);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -37,7 +37,11 @@ const ProductDetailScreen = () => {
 
         <Pressable
           style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
-          onPress={() => dispatch(addItem({ product: product, quantity }))}>
+          onPress={
+            () => {
+              dispatch(addItem({ product: product, quantity }))
+              navigation.navigate('Cart')
+            }} >
           <Text style={styles.textAddToCart}>Agregar al carrito</Text>
         </Pressable>
       </View>

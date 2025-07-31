@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import { deleteProduct, clearCart } from '../../features/cart/cartSlice';
 
-const CartScreen = () => {
+const CartScreen = ({ navigation }) => {
   const cart = useSelector(state => state.cartReducer.cart);
   const total = useSelector(state => state.cartReducer.total);
 
@@ -32,7 +32,7 @@ const CartScreen = () => {
     );
   };
 
-  const renderFooter = () => (
+  const Main = () => (
     <View style={styles.totalContainer}>
       <Text style={styles.totalText}>Total: ${total}</Text>
       <Pressable onPress={() => dispatch(clearCart())}>
@@ -40,6 +40,18 @@ const CartScreen = () => {
       </Pressable>
     </View>
   );
+
+
+  const Footer = () => (
+    <View style={styles.footerContainer}>
+      <Pressable style={styles.checkoutButton} onPress={() => navigation.navigate('Orders')}>
+        <Text style={styles.checkoutText}>Terminar Compra</Text>
+      </Pressable>
+    </View>
+  );
+
+
+ 
 
   return (
     <>
@@ -49,7 +61,12 @@ const CartScreen = () => {
             data={cart}
             renderItem={cartRender}
             keyExtractor={item => item.id}
-            ListFooterComponent={renderFooter}
+            ListFooterComponent={
+              <>
+                <Main />
+                <Footer />
+              </>
+            }
           />
         ) : (
           <View style={styles.containerTitleClear}>
@@ -112,11 +129,11 @@ const styles = StyleSheet.create({
     borderRadius: 12
   },
   totalContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center', 
-      alignSelf: 'center',
-      gap: 10,
-      marginVertical: 10
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    gap: 10,
+    marginVertical: 10
   },
   totalText: {
     fontFamily: 'Poppins-Bold',
@@ -125,5 +142,18 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 24
   },
-
+  footerContainer: {
+    padding: 20,
+    alignItems: 'center',
+  },
+  checkoutButton: {
+    backgroundColor: colors.green,
+    padding: 12,
+    borderRadius: 8,
+  },
+  checkoutText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  }, 
 })
