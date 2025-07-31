@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         margin: '0 auto',
-        backgroundColor: colors.grisClaro,
+        backgroundColor: colors.lightGray,
         justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
         padding: 20, 
         margin: 8,
-        width: '100%',  
+        width: '95%',  
         shadowColor: colors.black,
         elevation: 6,
         borderRadius:12

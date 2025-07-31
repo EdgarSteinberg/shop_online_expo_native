@@ -6,12 +6,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { usePutProfilePictureMutation } from '../../services/user/userApi.js';
 import { setProfilePicture } from '../../features/user/userSlice.jsx';
 
+
 const ProfileScreen = () => {
 
     const user = useSelector(state => state.userReducer.userEmail);
     const localId = useSelector(state => state.userReducer.localId);
     const image = useSelector(state => state.userReducer.profilePicture);
     const [triggerPutProfilePicture, result] = usePutProfilePictureMutation();
+ 
 
     const dispatch = useDispatch();
 

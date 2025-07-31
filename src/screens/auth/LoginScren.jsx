@@ -1,44 +1,73 @@
-import { StyleSheet, Text, View, Pressable, Dimensions, TextInput } from "react-native";
+import { StyleSheet, Text, View, Pressable, Dimensions, TextInput, Switch } from "react-native";
 import { colors } from "../../components/theme/colors";
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../services/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../features/user/userSlice";
 import { LinearGradient } from 'expo-linear-gradient';
+import { clearSession, saveSession } from "../../db";
+
 
 const textInputWidth = Dimensions.get('window').width * 0.7;
 
-const LoginScreen = ({ navigation, route }) => {
+const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const [messageError, setMessageError] = useState('');
-
+    const [persistSession, setPersistSession] = useState(false);
+    console.log(persistSession)
     const [triggerLogin, result] = useLoginMutation();
 
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
-        if (email.trim() === '' && password.trim() === '') {
+        if (email.trim() === '' || password.trim() === '') {
             setError(true);
-            setMessageError('No puedes enviar datos vacios!');
+            setMessageError('No puedes enviar datos vacíos!');
             return;
         }
         triggerLogin({
             email, password
         })
     }
+    /* 
+        useEffect(() => {
+            if (result.status === 'fulfilled') {
+                dispatch(setUser({ email: result.data.email, localId: result.data.localId }));
+                setError(false);
+            } else if (result.status === 'rejected') {
+                setError(true);
+                setMessageError('Credenciales invalidas!');
+                return;
+            }
+        }, [result]); */
 
     useEffect(() => {
-        if (result.status === 'fulfilled') {
-            dispatch(setUser({ email: result.data.email, localId: result.data.localId }));
-            setError(false);
-        } else if (result.status === 'rejected') {
-            setError(true);
-            setMessageError('Credenciales invalidas!');
-            return;
+        const saveLoginSession = async () => {
+            if (result.status === 'fulfilled') {
+                try {
+                    const { localId, email } = result.data;
+                    if (persistSession) {
+                        await saveSession(localId, email);
+                    } else {
+                        await clearSession();
+                    }
+                     dispatch(setUser({ localId, email }));
+                } catch (error) {
+                    setError(true);
+                    console.error(error);
+                    setMessageError('Error al persistir sesión');
+                    return;
+                }
+            } else if (result.status === 'rejected') {
+                setError(true);
+                setMessageError('Credenciales invalidas!');
+                return;
+            }
         }
-    }, [result]);
+        saveLoginSession();
+    }, [result])
 
     useEffect(() => {
         setError(false)
@@ -82,6 +111,14 @@ const LoginScreen = ({ navigation, route }) => {
                     </Pressable>
                 </View>
                 <Pressable style={styles.btn} onPress={handleSubmit}><Text style={styles.btnText}>Iniciar sesión</Text></Pressable>
+                <View style={styles.sessionContainer}>
+                    <Text style={styles.sessionText}>Mantener la sesíon iniciada?</Text>
+                    <Switch
+                        onValueChange={() => setPersistSession(!persistSession)}
+                        value={persistSession}
+                        trackColor={{ false: '#767577', true: '#81b0ff' }}
+                    />
+                </View>
             </View>
         </LinearGradient>
     )
@@ -165,4 +202,15 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontFamily: 'Poppins-Bold',
     },
+    sessionContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 8
+    },
+    sessionText: {
+        color: colors.black,
+        fontFamily: 'Poppins-Bold',
+        fontWeight: 'bold'
+    }
 })
