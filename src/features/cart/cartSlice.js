@@ -10,7 +10,7 @@ const cartSlice = createSlice({
     reducers: {
         addItem: (state, action) => {
             const { product, quantity } = action.payload;
-            console.log('Agregando producto al carrito', product, 'cantidad', quantity);
+           /*  console.log('Agregando producto al carrito', product, 'cantidad', quantity); */
 
             const productInCart = state.cart.find((item) => item.id === product.id);
 
@@ -22,7 +22,7 @@ const cartSlice = createSlice({
 
             state.total = state.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
             state.date = new Date().toLocaleString();
-            console.log(current(state.cart));
+            /* console.log(current(state.cart)); */
         },
         deleteProduct: (state, action) => {
             const productId = action.payload;

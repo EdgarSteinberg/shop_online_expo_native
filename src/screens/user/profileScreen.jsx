@@ -27,7 +27,7 @@ const ProfileScreen = () => {
             base64: true
         });
 
-        console.log(result);
+       /*  console.log(result); */
 
         if (!result.canceled) {
             const imgBase64 = `data:image/jpeg;base64,${result.assets[0].base64}`

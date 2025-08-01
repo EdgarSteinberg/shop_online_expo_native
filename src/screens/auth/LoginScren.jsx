@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
     const [error, setError] = useState(false);
     const [messageError, setMessageError] = useState('');
     const [persistSession, setPersistSession] = useState(false);
-    console.log(persistSession)
+   /*  console.log(persistSession) */
     const [triggerLogin, result] = useLoginMutation();
 
     const dispatch = useDispatch();
@@ -31,17 +31,7 @@ const LoginScreen = ({ navigation }) => {
             email, password
         })
     }
-    /* 
-        useEffect(() => {
-            if (result.status === 'fulfilled') {
-                dispatch(setUser({ email: result.data.email, localId: result.data.localId }));
-                setError(false);
-            } else if (result.status === 'rejected') {
-                setError(true);
-                setMessageError('Credenciales invalidas!');
-                return;
-            }
-        }, [result]); */
+  
 
     useEffect(() => {
         const saveLoginSession = async () => {

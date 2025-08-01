@@ -4,7 +4,7 @@ import Search from '../search/Search';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useState, useEffect } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setCategorieSelected } from '../../features/shop/shopSlice';
 import { filterProducts } from '../../features/shop/shopSlice';
 import { useGetCategoriesQuery } from '../../services/shop/shopApi';
@@ -48,12 +48,12 @@ const Header = () => {
 
 
   const handleClearSession = async () => {
-      try{
-        const result = await clearSession();
-        dispatch(clearUser());
-      }catch(error){
-        console.log(error);
-      }
+    try {
+      const result = await clearSession();
+      dispatch(clearUser());
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   if (isLoading) return <Loading />
@@ -62,26 +62,32 @@ const Header = () => {
 
   return (
     <LinearGradient
-      colors={[ colors.red, '#ffcccc',]} // rojo suave a fuerte
+      colors={[colors.red, '#ffcccc',]}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={styles.container}
     >
       <Search setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
-      {/*    <Text style={styles.titleText}>{title}</Text> */}
+      {
+        user && (
+          <Pressable
+            onPress={handleClearSession}
+            style={({ pressed }) => [
+              styles.logoutButton,
+              pressed && { opacity: 0.6 }
+            ]}
+          >
+            <Text style={styles.textClearSession}>Cerrar sesión</Text>
+          </Pressable>
+        )
+      }
       {
         canGoBack &&
         <Pressable style={styles.goBack} onPress={() => navigation.goBack()} >
           <Icon name='chevrons-left' size={32} color={colors.white} />
         </Pressable>
       }
-      {
-        user && (
-          <Pressable onPress={handleClearSession}>
-            <Text>Salir</Text>
-          </Pressable>
-        )
-      }
+
     </LinearGradient >
   )
 }
@@ -96,11 +102,28 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 34,
-    color: '#fff'
+    color: colors.white
   },
   goBack: {
-    positiom: 'absolute',
-    botton: 100,
-    right: 180
-  }
+    position: 'absolute',
+    bottom: 20,
+    right: 370
+  },
+  textClearSession: {
+    fontSize: 20,
+    color: colors.white
+  },
+  logoutButton: {
+    backgroundColor: '#ffffff33',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginTop: 10,
+  },
+  textClearSession: {
+    fontSize: 18,
+    color: colors.white,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
 });

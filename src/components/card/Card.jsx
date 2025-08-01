@@ -20,12 +20,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
-        paddingVertical: 24, 
+        paddingVertical: 6, 
         margin: 8,
         width: 180,  
         shadowColor: colors.black,
         elevation: 6,
-        borderRadius:12
+        borderRadius:12,
+        backgroundColor: colors.lightGray
     }
 
 });

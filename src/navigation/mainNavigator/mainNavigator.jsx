@@ -24,7 +24,7 @@ const MainNavigator = () => {
             await initSessionTable();
             const session = await getSession();
             if (session) {
-                console.log('session', session);
+              /*   console.log('session', session); */
                 dispatch(setUser({ email: session.email, localId: session.localId }));
             }
             setLoading(false);

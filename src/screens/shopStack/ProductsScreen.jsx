@@ -43,9 +43,8 @@ const ProductsScreen = ({ navigation }) => {
                                 style={styles.image}
                                 resizeMode="corven"
                             />
-                            <Text style={styles.title}>{item.title}</Text>
-
                         </View>
+                            <Text style={styles.title}>{item.title}</Text>
                     </View>
                 </Card>
             </Pressable>
@@ -89,8 +88,10 @@ const styles = StyleSheet.create({
         justifyContent: 'start'
     },
     cardContainer: {
+        justifyContent: 'center',
         alignItems: 'center',
-        padding: 16
+     
+        
     },
     title: {
         fontFamily: 'Poppins-Bold',
@@ -98,15 +99,16 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     ProductContainer: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         gap: 20,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingVertical: 14,
+        paddingHorizontal:12
     },
     imageContainer: {
         width: 100,
         height: 100,
-        backgroundColor: '#eee',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 4,

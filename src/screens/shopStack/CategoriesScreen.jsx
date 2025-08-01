@@ -32,8 +32,8 @@ const CategoriesScreen = ({ navigation }) => {
                             style={styles.image}
                             resizeMode="contain"
                         />
-                        <Text style={styles.title}>{item.title}</Text>
                     </View>
+                        <Text style={styles.title}>{item.title}</Text>
                 </View>
             </Card>
         </Pressable>
@@ -52,20 +52,20 @@ const CategoriesScreen = ({ navigation }) => {
     }
 
     return (
-          <LinearGradient
-              colors={['#ffcccc', colors.red]} // rojo suave a fuerte
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={styles.container}
-            >
-        <FlatList
-            key={numColumns}
-            data={categories}
-            renderItem={renderCategoryItem}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
-            contentContainerStyle={styles.cardContainer}
-        />
+        <LinearGradient
+            colors={['#ffcccc', colors.red]} // rojo suave a fuerte
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={styles.container}
+        >
+            <FlatList
+                key={numColumns}
+                data={categories}
+                renderItem={renderCategoryItem}
+                keyExtractor={(item) => item.id.toString()}
+                numColumns={2}
+                contentContainerStyle={styles.cardContainer}
+            />
         </LinearGradient>
     );
 };
@@ -76,27 +76,29 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'start'
-         
+
     },
     cardContainer: {
         alignItems: 'center',
-        padding: 16
+        padding: 10,
+        
     },
     title: {
         fontFamily: 'Poppins-Bold',
-        textAlign: 'center'
+        textAlign: 'center',
+       
     },
     categoryContainer: {
         flexDirection: 'column',
         gap: 10,
         alignItems: 'center',
         justifyContent: 'center',
-
+        paddingVertical: 12,
+        paddingHorizontal: 24
     },
     imageContainer: {
         width: 100,
         height: 100,
-        backgroundColor: '#eee',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 4,

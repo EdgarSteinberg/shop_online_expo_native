@@ -9,13 +9,10 @@ import { colors } from '../../components/theme/colors';
 import { View, Text, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 
-
-
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
     const { width, height } = useWindowDimensions();
-    console.log(width, height)
 
     return (
         

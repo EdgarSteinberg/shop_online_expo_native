@@ -18,7 +18,7 @@ export const ordersApi = createApi({
 
         createOrder: builder.mutation({
             query: (orderData) => {
-                console.log('🔄 Enviando orden a Firebase:', orderData); 
+                console.log('Enviando orden', orderData); 
                 return {
                     url: 'orders.json', 
                     method: 'POST',

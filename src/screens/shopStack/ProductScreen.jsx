@@ -5,14 +5,14 @@ import { addItem } from '../../features/cart/cartSlice';
 import Counter from '../../components/counter/counter';
 import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
- 
+
 const ProductDetailScreen = ({ navigation }) => {
   const product = useSelector(state => state.shopReducer.productSelected);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
-  console.log('quantity', quantity)
+ 
   if (!product) {
     return <Text>No hay producto seleccionado</Text>;
   }
@@ -28,17 +28,15 @@ const ProductDetailScreen = ({ navigation }) => {
         <Image
           source={{ uri: product.image }}
           alt={product.title}
-          style={styles.img}
           width='100%'
           height={width * .7}
           resizeMode='contain'
         />
         <Text style={styles.textTitle}>{product.title}</Text>
-        <Text style={styles.longDescription}>{product.description}</Text>
-        <Text style={styles.textBrand}>{product.brand}</Text>
+        <Text style={styles.description}>{product.description}</Text>
         <Text style={styles.price}>Precio: ${product.price}</Text>
 
-        <View style={styles.tags}>
+        <View style={styles.btnContainer}>
           <Counter setQuantity={setQuantity} />
 
           <Pressable
@@ -63,14 +61,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'start'
-
   },
   img: {
     borderRadius: 9
   },
   productContainer: {
     paddingHorizontal: 16,
-    marginVertical: 16
+    margin: '0 auto',
+    backgroundColor: colors.white
   },
   textBrand: {
     color: colors.grisOscuro,
@@ -78,55 +76,30 @@ const styles = StyleSheet.create({
   textTitle: {
     fontSize: 24,
     fontWeight: '700',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: colors.black
   },
-  longDescription: {
+  description: {
     fontSize: 16,
-    textAlign: 'justify',
+    textAlign: 'center',
     paddingVertical: 8,
-  },
-  tagsContainer: {
-    flexDirection: 'row',
-    gap: 5,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: 8
-  },
-  tags: {
-    flexDirection: 'row',
-    gap: 5,
-  },
-  tagText: {
-    fontWeight: '600',
-    fontSize: 14,
-    color: colors.purple
-  },
-  price: {
-    fontWeight: '800',
-    fontSize: 18,
+    color: colors.black
 
   },
-  discount: {
-    backgroundColor: colors.brightOrange,
-    width: 52,
-    height: 52,
-    borderRadius: 52,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  discountText: {
-    color: colors.white,
-    textAlign: 'center',
-    verticalAlign: 'center'
+  btnContainer: {
+    flexDirection: 'row',
+    gap: 5,
   },
   price: {
     fontSize: 24,
     fontWeight: '700',
     alignSelf: 'center',
+    marginBottom: 10,
+    color: colors.black
 
   },
   addToCartButton: {
-    padding: 8,
+    padding: 12,
     paddingHorizontal: 16,
     backgroundColor: colors.red,
     borderRadius: 16,

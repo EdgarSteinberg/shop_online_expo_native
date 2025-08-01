@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
-import { View, TextInput, StyleSheet, Image } from 'react-native';
+import { View, TextInput, StyleSheet, Image, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 
 const SearchInput = ({ searchQuery, setSearchQuery }) => {
   return (
     <View style={styles.container}>
-       <Image
-        source={{ uri: "https://i.postimg.cc/fSW3yJF0/p-rellena.webp"}}
+      {/* <Image
+        source={{ uri: "https://i.postimg.cc/fSW3yJF0/p-rellena.webp" }}
         style={styles.image}
-      />
+      /> */}
+      <Text style={styles.title}>BodegónApp!</Text>
+
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -20,7 +22,7 @@ const SearchInput = ({ searchQuery, setSearchQuery }) => {
         />
         <Ionicons name="search" size={20} color={colors.red} style={styles.icon} />
       </View>
-     
+
     </View>
   );
 };
@@ -28,14 +30,22 @@ const SearchInput = ({ searchQuery, setSearchQuery }) => {
 export default SearchInput;
 
 const styles = StyleSheet.create({
+  title: {
+    color: colors.white,
+    fontFamily: 'Poppins-Bold',
+    fontSize: 30,
+    textAlign: 'center',
+    paddingVertical: 40
+  },
+ 
   container: {
     width: 400,
     marginTop: 1,
-    alignItems: 'center', // para centrar la imagen debajo del input
-    paddingBottom: 10,
+    alignItems: 'center',
+    paddingBottom: 4,
   },
   inputContainer: {
-    width: '100%',
+    width: '95%',
     height: 45,
     justifyContent: 'center',
   },
@@ -48,7 +58,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontSize: 16,
     backgroundColor: '#fff',
-    marginTop: 10
+
   },
   icon: {
     position: 'absolute',
@@ -63,6 +73,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     resizeMode: 'corver',
     borderRadius: 12,
-  
+
   },
 });

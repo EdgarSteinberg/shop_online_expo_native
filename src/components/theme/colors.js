@@ -8,5 +8,6 @@ export const colors = {
     "red": "#e31102ff",
     "grisOscuro": "#333333",
     "grisClaro": "#646464ff",
-    "green": "#35ff75ff"
+    "green": "#35ff75ff",
+ 
 }
