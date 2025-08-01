@@ -1,14 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { colors } from '../theme/colors'
- 
 
-const ErrorMessage = () => {
-  return (
-       <View style={styles.errorContainer}>
-                <Text style={styles.titleText}>Error al cargar las categorías.</Text>
-            </View>
-  )
-}
+
+const ErrorMessage = ({ message }) => {
+    return (
+        <View style={styles.errorContainer}>
+            <Text style={styles.titleText}>
+                {typeof message === 'string' ? message : 'Ocurrió un error inesperado.'}
+            </Text>
+        </View>
+    );
+};
 
 export default ErrorMessage
 
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center'
     },
-     titleText:{
+    titleText: {
         fontFamily: 'Poppins-Bold',
         fontWeight: 'bold',
         fontSize: 16,

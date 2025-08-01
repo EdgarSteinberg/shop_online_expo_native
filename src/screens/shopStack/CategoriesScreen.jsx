@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Image, Pressable, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, Pressable } from 'react-native';
 import Card from '../../components/card/Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategorieSelected, filterProducts } from '../../features/shop/shopSlice';

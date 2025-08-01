@@ -1,19 +1,21 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Header from '../../components/header/Header';
 import OrdersScreen from '../../screens/orders/OrdersScreen';
+import OrdersByIdScreen from '../../screens/orders/OrdersByIdScreen';
 
 const Stack = createNativeStackNavigator();
 
 const OrdersStackNavigator = () => {
 
-    return(
+    return (
         <Stack.Navigator
             initialRouteName='Ordenes'
             screenOptions={{
-                header: () => <Header/>
+                header: () => <Header />
             }}
         >
-            <Stack.Screen name='Ordenes' component={OrdersScreen}/>
+            <Stack.Screen name='Ordenes' component={OrdersScreen} />
+            <Stack.Screen name='OrdenesId' component={OrdersByIdScreen} />
         </Stack.Navigator>
     )
 }
