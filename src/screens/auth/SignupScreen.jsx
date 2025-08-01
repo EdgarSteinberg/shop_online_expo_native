@@ -74,7 +74,7 @@ const SignupScreen = ({ navigation }) => {
                     <TextInput
                         onChangeText={(text) => setConfirmPassword(text)}
                         placeholderTextColor={colors.black}
-                        placeholder='Confirmar contraseña:'
+                        placeholder='Confirmar contraseña'
                         style={styles.textInput}
                         secureTextEntry
                     />

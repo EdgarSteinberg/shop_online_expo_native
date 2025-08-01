@@ -3,7 +3,7 @@ import { useCreateOrderMutation } from '../../services/orders/orders';
 import { useSelector } from 'react-redux';
 import Loading from '../../components/loading/Loading';
 import ErrorMessage from '../../components/errorMessage/ErrorMessage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { colors } from '../../components/theme/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useWindowDimensions } from 'react-native';
@@ -18,6 +18,9 @@ const OrdersScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [order, setOrder] = useState(false);
+  const [errors, setErrors] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false)
 
   const dispatch = useDispatch();
   const [triggerCreateOrder, { isLoading, error }] = useCreateOrderMutation();
@@ -27,6 +30,11 @@ const OrdersScreen = ({ navigation }) => {
 
 
   const handleCreateOrder = async () => {
+    if (!name.trim() || !last_name.trim() || !email.trim()) {
+      setErrors(true)
+      setErrorMessage('No puedes enviar datos vacíos');
+      return;
+    }
     const newOrder = {
       userId: userEmail,
       name,
@@ -35,10 +43,11 @@ const OrdersScreen = ({ navigation }) => {
       items: [...cart],
       total,
       date: new Date().toISOString(),
-    };
+    }
 
     await triggerCreateOrder(newOrder).unwrap(); // <- Esto espera que la promesa termine correctamente
     dispatch(clearCart()); // ✅ Vaciás el carrito
+    setOrder(true);
   };
 
   const handleCart = ({ item }) => (
@@ -49,8 +58,13 @@ const OrdersScreen = ({ navigation }) => {
     </View>
   );
 
+  useEffect(() => {
+    setErrors(false)
+  }, [email, name, last_name])
+
   if (isLoading) return <Loading />
   if (error) return <ErrorMessage />
+
 
   return (
     <LinearGradient
@@ -59,59 +73,69 @@ const OrdersScreen = ({ navigation }) => {
       end={{ x: 0, y: 1 }}
       style={styles.container}
     >
-      <Text style={styles.subTitle}>Completar compra</Text>
-      {
-        cart.length > 0 && (
-          <>
-            <FlatList
-              data={cart}
-              renderItem={handleCart}
-              keyExtractor={item => item.id}
-              style={{ maxHeight: height * 0.1 }} // 30% del alto de pantalla
-              scrollEnabled={cart.length > 3} // solo scroll si hay muchos productos
+
+      {order ? (
+        <View>
+          <Text style={styles.subTitle} >La orden se genero correctamente</Text>
+          <Pressable onPress={() => navigation.navigate('OrdenesId')} style={styles.btnOrder}>
+            <Text style={styles.btnText}>ver detalle</Text>
+          </Pressable>
+        </View>
+
+      ) : (
+        <>
+          {errors && <Text style={styles.errorTex}>{errorMessage}</Text>}
+          <Text style={styles.subTitle}>Completar compra</Text>
+          {cart.length > 0 && (
+            <>
+              <FlatList
+                data={cart}
+                renderItem={handleCart}
+                keyExtractor={item => item.id}
+                style={{ maxHeight: height * 0.1 }}
+                scrollEnabled={cart.length > 3}
+              />
+              <Text>Total de la compra: ${total}</Text>
+            </>
+          )}
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={(text) => setName(text)}
+              placeholderTextColor={colors.black}
+              placeholder="Nombre"
+              style={styles.textInput}
             />
-            <Text>Total de la compra: ${total}</Text>
-          </>
-        )
-      }
-      <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={(text) => setLastName(text)}
+              placeholderTextColor={colors.black}
+              placeholder="Apellido"
+              style={styles.textInput}
+            />
+            <TextInput
+              onChangeText={(text) => setEmail(text)}
+              placeholderTextColor={colors.black}
+              placeholder="Email"
+              style={styles.textInput}
+            />
+          </View>
 
-        <TextInput
-          onChangeText={(text) => setName(text)}
-          placeholderTextColor={colors.black}
-          placeholder='Nombre'
-          style={styles.textInput}
-
-        />
-        <TextInput
-          onChangeText={(text) => setLastName(text)}
-          placeholderTextColor={colors.black}
-          placeholder='Apellido'
-          style={styles.textInput}
-
-        />
-        <TextInput
-          onChangeText={(text) => setEmail(text)}
-          placeholderTextColor={colors.black}
-          placeholder="Email"
-          style={styles.textInput}
-        />
-
-      </View>
-      <View style={styles.textContainer}>
-        <Pressable onPress={handleCreateOrder} style={styles.button}>
-          <Text style={styles.buttonText}>Comprar</Text>
-        </Pressable>
-      </View>
-
-      <Pressable onPress={() => navigation.navigate('OrdenesId')}>
-        <Text>Orden</Text>
-      </Pressable>
+          {
+            cart.length > 0 && (
+              <View style={styles.textContainer}>
+                <Pressable onPress={handleCreateOrder} style={styles.button}>
+                  <Text style={styles.buttonText}>Comprar</Text>
+                </Pressable>
+              </View>
+            )
+          }
+        </>
+      )}
     </LinearGradient>
   )
-}
 
-export default OrdersScreen
+}
+export default OrdersScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -163,6 +187,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 7
+    marginTop: 7,
+
+  },
+  btnOrder: {
+    padding: 12,
+    backgroundColor: colors.black,
+    borderRadius: 16,
+    marginTop: 24,
+    width: 180,
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  btnText: {
+    color: colors.white,
+    fontSize: 16,
+    fontFamily: 'Poppins-Bold',
+    textAlign: 'center'
+  },
+  errorTex: {
+    fontSize: 24,
+    color: colors.red
   }
 });

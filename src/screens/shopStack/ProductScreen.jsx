@@ -61,14 +61,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'start'
+    
   },
   img: {
     borderRadius: 9
   },
   productContainer: {
     paddingHorizontal: 16,
-    margin: '0 auto',
-    backgroundColor: colors.white
+    paddingVertical: 30,
+    backgroundColor: colors.white,
+   
   },
   textBrand: {
     color: colors.grisOscuro,
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '700',
     alignSelf: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
     color: colors.black
 
   },

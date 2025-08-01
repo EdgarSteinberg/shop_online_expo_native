@@ -16,7 +16,7 @@ const OrdersByIdScreen = () => {
             <View >
                 <Text style={styles.itemText}>Fecha: {item.date}</Text>
                 <View style={{ marginTop: 10 }}>
-                    {item.items.map((pr, index) => (
+                    {item.items?.map((pr, index) => (
                         <Text key={index} style={styles.itemText}>• {pr.title}</Text>
                     ))}
                 </View>
@@ -70,5 +70,5 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
 
-    }
+    },
 })
