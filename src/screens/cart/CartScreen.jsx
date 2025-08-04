@@ -5,10 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import { deleteProduct, clearCart } from '../../features/cart/cartSlice';
 import { LinearGradient } from 'expo-linear-gradient';
+ 
 
 const CartScreen = ({ navigation }) => {
   const cart = useSelector(state => state.cartReducer.cart);
   const total = useSelector(state => state.cartReducer.total);
+  
 
   const dispatch = useDispatch();
 
@@ -47,7 +49,11 @@ const CartScreen = ({ navigation }) => {
 
   const Footer = () => (
     <View style={styles.footerContainer}>
-      <Pressable style={styles.checkoutButton} onPress={() => navigation.navigate('Orders')}>
+      <Pressable style={styles.checkoutButton} 
+      onPress={() => {
+      
+        navigation.navigate('Orders')}}
+      >
         <Text style={styles.checkoutText}>Terminar Compra</Text>
       </Pressable>
     </View>
@@ -87,7 +93,7 @@ const CartScreen = ({ navigation }) => {
   );
 }
 
-export default CartScreen
+export default CartScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,29 +1,20 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../../components/theme/colors';
-import { useGetOrdersByIdQuery } from '../../services/orders/orders';
+import { useGetOrdersByIdQuery, useGetOrderByIdQuery } from '../../services/orders/orders';
 import { useSelector } from 'react-redux';
 import Loading from '../../components/loading/Loading';
 import ErrorMessage from '../../components/errorMessage/ErrorMessage';
 import CardItem from '../../components/cardItem/cardItem';
 
-const OrdersByIdScreen = () => {
-    const userEmail = useSelector(state => state.userReducer.userEmail);
-    const { data: ordersById, isLoading, error } = useGetOrdersByIdQuery(userEmail);
+const OrdersByIdScreen = ({ navigation, route }) => {
 
-    const renderOrder = ({ item }) => (
-        <CardItem>
-            <View >
-                <Text style={styles.itemText}>Fecha: {item.date}</Text>
-                <View style={{ marginTop: 10 }}>
-                    {item.items?.map((pr, index) => (
-                        <Text key={index} style={styles.itemText}>• {pr.title}</Text>
-                    ))}
-                </View>
-                <Text  style={styles.itemText}>Total: ${item.total}</Text>
-            </View>
-        </CardItem>
-    );
+    const userEmail = useSelector(state => state.userReducer.userEmail);
+    /* const { data: ordersById, isLoading, error } = useGetOrdersByIdQuery(userEmail);
+ */  const orderId = route?.params?.orderId;
+    /*    console.log(orderId) */
+    const { data: order, isLoading, error } = useGetOrderByIdQuery(orderId);
+
 
     if (isLoading) return <Loading />
     if (error) return <ErrorMessage message={`Error al cargar las órdenes. ${error?.message || error}`} />;
@@ -35,14 +26,27 @@ const OrdersByIdScreen = () => {
             end={{ x: 0, y: 1 }}
             style={styles.container}
         >
-            <View>
-                <Text style={styles.title}>OrdersByIdScreen</Text>
-                <FlatList
-                    data={ordersById}
-                    renderItem={renderOrder}
-                    keyExtractor={item => item.date}
-                />
-            </View>
+            <Text style={styles.title}>Detalle de la compra</Text>
+            <CardItem>
+                <View>
+                    <Text style={styles.itemText}>Fecha: {order.date}</Text>
+                    <Text style={styles.itemText}>Email: {order.email}</Text>
+
+                    <View style={{ marginTop: 10 }}>
+                        {order.items?.map((pr, index) => (
+                            <Text key={index} style={styles.itemText}>• {pr.title} x {pr.quantity}</Text>
+                        ))}
+                    </View>
+                    <Text style={styles.itemText}>Total: ${order.total}</Text>
+                </View>
+            </CardItem>
+
+            <Pressable
+                onPress={() => navigation.navigate('Shop', { screen: 'Categorias' })}
+                style={styles.btn}
+            >
+                <Text style={styles.btnText}>Ir a Categorías</Text>
+            </Pressable>
         </LinearGradient>
     )
 }
@@ -70,5 +74,20 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
 
+    },
+    btn: {
+        padding: 12,
+        backgroundColor: colors.black,
+        borderRadius: 16,
+        marginTop: 24,
+        width: 180,
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+    btnText: {
+        color: colors.white,
+        fontSize: 16,
+        fontFamily: 'Poppins-Bold',
+        textAlign: 'center'
     },
 })

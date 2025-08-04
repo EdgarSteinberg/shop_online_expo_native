@@ -9,6 +9,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useWindowDimensions } from 'react-native';
 import { clearCart } from '../../features/cart/cartSlice';
 import { useDispatch } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 
 const textInputWidth = Dimensions.get('window').width * 0.7;
@@ -18,7 +20,7 @@ const OrdersScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [order, setOrder] = useState(false);
+  /*   const [order, setOrder] = useState(false); */
   const [errors, setErrors] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false)
 
@@ -29,12 +31,34 @@ const OrdersScreen = ({ navigation }) => {
   const total = useSelector(state => state.cartReducer.total);
 
 
+  // const handleCreateOrder = async () => {
+  //   if (!name.trim() || !last_name.trim() || !email.trim()) {
+  //     setErrors(true)
+  //     setErrorMessage('No puedes enviar datos vacíos');
+  //     return;
+  //   }
+  //   const newOrder = {
+  //     userId: userEmail,
+  //     name,
+  //     last_name,
+  //     email,
+  //     items: [...cart],
+  //     total,
+  //     date: new Date().toISOString(),
+  //   }
+
+  //   await triggerCreateOrder(newOrder).unwrap(); // <- Esto espera que la promesa termine correctamente
+  //   dispatch(clearCart()); // ✅ Vaciás el carrito
+
+  // }; 
+
   const handleCreateOrder = async () => {
     if (!name.trim() || !last_name.trim() || !email.trim()) {
-      setErrors(true)
+      setErrors(true);
       setErrorMessage('No puedes enviar datos vacíos');
       return;
     }
+
     const newOrder = {
       userId: userEmail,
       name,
@@ -43,12 +67,21 @@ const OrdersScreen = ({ navigation }) => {
       items: [...cart],
       total,
       date: new Date().toISOString(),
-    }
+    };
 
-    await triggerCreateOrder(newOrder).unwrap(); // <- Esto espera que la promesa termine correctamente
-    dispatch(clearCart()); // ✅ Vaciás el carrito
-    setOrder(true);
+    const createdOrder = await triggerCreateOrder(newOrder).unwrap();
+
+
+
+
+    const orderId = createdOrder.name;  // Este es el ID generado por Firebase
+
+    dispatch(clearCart());
+
+    navigation.navigate('OrdenesId', { orderId });
   };
+
+
 
   const handleCart = ({ item }) => (
     <View style={styles.cardContainer}>
@@ -62,6 +95,7 @@ const OrdersScreen = ({ navigation }) => {
     setErrors(false)
   }, [email, name, last_name])
 
+
   if (isLoading) return <Loading />
   if (error) return <ErrorMessage />
 
@@ -74,63 +108,60 @@ const OrdersScreen = ({ navigation }) => {
       style={styles.container}
     >
 
-      {order ? (
-        <View>
-          <Text style={styles.subTitle} >La orden se genero correctamente</Text>
-          <Pressable onPress={() => navigation.navigate('OrdenesId')} style={styles.btnOrder}>
-            <Text style={styles.btnText}>ver detalle</Text>
-          </Pressable>
+      <>
+        {errors && <Text style={styles.errorTex}>{errorMessage}</Text>}
+        <Text style={styles.subTitle}>Completar compra</Text>
+        {cart.length > 0 && (
+          <>
+            <FlatList
+              data={cart}
+              renderItem={handleCart}
+              keyExtractor={item => item.id}
+              style={{ maxHeight: height * 0.1 }}
+              scrollEnabled={cart.length > 3}
+            />
+            <Text>Total de la compra: ${total}</Text>
+          </>
+        )}
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            onChangeText={(text) => setName(text)}
+            placeholderTextColor={colors.black}
+            placeholder="Nombre"
+            style={styles.textInput}
+          />
+          <TextInput
+            onChangeText={(text) => setLastName(text)}
+            placeholderTextColor={colors.black}
+            placeholder="Apellido"
+            style={styles.textInput}
+          />
+          <TextInput
+            onChangeText={(text) => setEmail(text)}
+            placeholderTextColor={colors.black}
+            placeholder="Email"
+            style={styles.textInput}
+          />
         </View>
 
-      ) : (
-        <>
-          {errors && <Text style={styles.errorTex}>{errorMessage}</Text>}
-          <Text style={styles.subTitle}>Completar compra</Text>
-          {cart.length > 0 && (
-            <>
-              <FlatList
-                data={cart}
-                renderItem={handleCart}
-                keyExtractor={item => item.id}
-                style={{ maxHeight: height * 0.1 }}
-                scrollEnabled={cart.length > 3}
-              />
-              <Text>Total de la compra: ${total}</Text>
-            </>
-          )}
-
-          <View style={styles.inputContainer}>
-            <TextInput
-              onChangeText={(text) => setName(text)}
-              placeholderTextColor={colors.black}
-              placeholder="Nombre"
-              style={styles.textInput}
-            />
-            <TextInput
-              onChangeText={(text) => setLastName(text)}
-              placeholderTextColor={colors.black}
-              placeholder="Apellido"
-              style={styles.textInput}
-            />
-            <TextInput
-              onChangeText={(text) => setEmail(text)}
-              placeholderTextColor={colors.black}
-              placeholder="Email"
-              style={styles.textInput}
-            />
+        {cart.length > 0 && (
+          <View style={styles.textContainer}>
+            <Pressable
+              onPress={() => {
+                handleCreateOrder();
+                navigation.navigate('OrdenesId');
+              }}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Comprar</Text>
+            </Pressable>
           </View>
+        )
 
-          {
-            cart.length > 0 && (
-              <View style={styles.textContainer}>
-                <Pressable onPress={handleCreateOrder} style={styles.button}>
-                  <Text style={styles.buttonText}>Comprar</Text>
-                </Pressable>
-              </View>
-            )
-          }
-        </>
-      )}
+        }
+      </>
+
     </LinearGradient>
   )
 
@@ -190,21 +221,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
 
   },
-  btnOrder: {
-    padding: 12,
-    backgroundColor: colors.black,
-    borderRadius: 16,
-    marginTop: 24,
-    width: 180,
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  btnText: {
-    color: colors.white,
-    fontSize: 16,
-    fontFamily: 'Poppins-Bold',
-    textAlign: 'center'
-  },
+
   errorTex: {
     fontSize: 24,
     color: colors.red

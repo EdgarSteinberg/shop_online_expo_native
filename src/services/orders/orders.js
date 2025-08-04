@@ -15,12 +15,14 @@ export const ordersApi = createApi({
                 `orders.json?orderBy="userId"&equalTo="${userEmail}"`,
             transformResponse: (response) => Object.values(response),
         }),
-
+        getOrderById: builder.query({
+            query: (orderId) => `orders/${orderId}.json`,
+        }),
         createOrder: builder.mutation({
             query: (orderData) => {
-                console.log('Enviando orden', orderData); 
+                console.log('Enviando orden', orderData);
                 return {
-                    url: 'orders.json', 
+                    url: 'orders.json',
                     method: 'POST',
                     body: orderData,
                 };
@@ -29,4 +31,4 @@ export const ordersApi = createApi({
     }),
 });
 
-export const { useGetOrdersQuery, useGetOrdersByIdQuery, useCreateOrderMutation, } = ordersApi;
+export const { useGetOrdersQuery, useGetOrdersByIdQuery, useCreateOrderMutation, useGetOrderByIdQuery} = ordersApi;
