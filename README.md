@@ -124,3 +124,24 @@ Podés usar 👉 https://postimages.org para subir y compartir imágenes fácilm
 `import { useWindowDimensions } from 'react-native';`  
 `const { width, height } = useWindowDimensions();`  
 🧠 Si usás Expo y querés permitir orientación horizontal, quitá o comentá esta línea del `app.json`: `"orientation": "portrait",`
+
+
+## 🔁 `CommonActions` en React Navigation
+
+```js
+import { CommonActions } from '@react-navigation/native';
+
+navigation.dispatch(
+  CommonActions.reset({
+    index: 0,
+    routes: [{ name: 'Categorias' }],
+  })
+);
+
+
+## 🍞 `react-native-toast-message` para mostrar notificaciones (toasts)
+
+Primero instalás la librería con:
+
+```bash
+npm install react-native-toast-message
