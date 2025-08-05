@@ -71,9 +71,6 @@ const OrdersScreen = ({ navigation }) => {
 
     const createdOrder = await triggerCreateOrder(newOrder).unwrap();
 
-
-
-
     const orderId = createdOrder.name;  // Este es el ID generado por Firebase
 
     dispatch(clearCart());

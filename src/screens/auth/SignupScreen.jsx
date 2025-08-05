@@ -3,6 +3,7 @@ import { colors } from '../../components/theme/colors';
 import { useEffect, useState } from 'react';
 import { useSignupMutation } from '../../services/auth/authApi';
 import { LinearGradient } from 'expo-linear-gradient';
+import Toast from 'react-native-toast-message';
 
 const textInputWidth = Dimensions.get('window').width * 0.7
 
@@ -35,6 +36,10 @@ const SignupScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (result.status === 'fulfilled') {
+            Toast.show({
+                type: 'success',
+                text1: '¡Registro Exitoso!'
+            });
             navigation.navigate('Login');
         }
     }, [result]); // 

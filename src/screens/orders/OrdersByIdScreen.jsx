@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Loading from '../../components/loading/Loading';
 import ErrorMessage from '../../components/errorMessage/ErrorMessage';
 import CardItem from '../../components/cardItem/cardItem';
+import { CommonActions } from '@react-navigation/native';
 
 const OrdersByIdScreen = ({ navigation, route }) => {
 
@@ -16,7 +17,7 @@ const OrdersByIdScreen = ({ navigation, route }) => {
     const { data: order, isLoading, error } = useGetOrderByIdQuery(orderId);
 
 
-    if (isLoading) return <Loading />
+    if (isLoading || !order) return <Loading />
     if (error) return <ErrorMessage message={`Error al cargar las órdenes. ${error?.message || error}`} />;
 
     return (
@@ -41,12 +42,26 @@ const OrdersByIdScreen = ({ navigation, route }) => {
                 </View>
             </CardItem>
 
-            <Pressable
+            {/*      <Pressable
                 onPress={() => navigation.navigate('Shop', { screen: 'Categorias' })}
                 style={styles.btn}
             >
                 <Text style={styles.btnText}>Ir a Categorías</Text>
+            </Pressable> */}
+            <Pressable
+                onPress={() => {
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [{ name: 'Shop' }], // o tu screen raíz
+                        })
+                    );
+                }}
+                style={styles.btn}
+            >
+                <Text style={styles.btnText}>Ir a Categorías</Text>
             </Pressable>
+
         </LinearGradient>
     )
 }

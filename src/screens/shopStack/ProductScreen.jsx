@@ -5,6 +5,7 @@ import { addItem } from '../../features/cart/cartSlice';
 import Counter from '../../components/counter/counter';
 import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import Toast from 'react-native-toast-message';
 
 const ProductDetailScreen = ({ navigation }) => {
   const product = useSelector(state => state.shopReducer.productSelected);
@@ -12,7 +13,7 @@ const ProductDetailScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
- 
+
   if (!product) {
     return <Text>No hay producto seleccionado</Text>;
   }
@@ -44,6 +45,10 @@ const ProductDetailScreen = ({ navigation }) => {
             onPress={
               () => {
                 dispatch(addItem({ product: product, quantity }))
+                Toast.show({
+                  type: 'success',
+                  text1: '¡Se agrego al carrito!'
+                });
                 navigation.navigate('Cart')
               }} >
             <Text style={styles.textAddToCart}>Agregar al carrito</Text>
@@ -61,7 +66,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'start'
-    
+
   },
   img: {
     borderRadius: 9
@@ -70,7 +75,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 30,
     backgroundColor: colors.white,
-   
+
   },
   textBrand: {
     color: colors.grisOscuro,

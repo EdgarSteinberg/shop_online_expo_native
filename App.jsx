@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import MainNavigator from './src/navigation/mainNavigator/mainNavigator';
 import { Provider } from 'react-redux';
 import store from './src/store';
+import Toast from 'react-native-toast-message';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,8 +35,8 @@ export default function App() {
     <Provider store={store}>
       <StatusBar style="black" />
       <MainNavigator />
+      <Toast />
     </Provider>
-
   );
 }
 
